@@ -1,19 +1,24 @@
-<div>
-    <div class="form-group">
-        <select class="form-control" ng-model="settings.lang" name="" ng-required="true" title="select voice">
-            <option value="">Please select a voice</option>
-            <option ng-repeat="voice in voices | filter:langFilter" value="{{voice.Id}}">{{voice.Name}} ({{ voice.LanguageName }})</option>
-        </select>
+<div ng-switch on="!voices.length">
+    <div ng-switch-when="true">
+        <i class="fa fa-spinner fa-spin"></i> <span translate="">Loading voices, please wait..</span>
     </div>
-    <div class="form-group">
-        <div class="pull-right">
-            <label class="text-normal"><sup><input type="checkbox" ng-model="settings.show_all"> Show non-English languages</sup></label>
+    <div ng-switch-default="">
+        <div class="form-group">
+            <select class="form-control" ng-model="settings.lang" name="" ng-required="true" title="select voice">
+                <option value="">Please select a voice</option>
+                <option ng-repeat="voice in voices | filter:langFilter" value="{{voice.Id}}">{{voice.Name}} ({{ voice.LanguageName }})</option>
+            </select>
         </div>
-        <button type="button" class="btn btn-success" ng-disabled="loading || !settings.lang || !text" ng-click="createTTS()" ng-disabled="!text">
-            <span ng-show="!loading"><i class="fa fa-bullhorn"></i> Generate speech</span>
-            <span ng-show="loading"><i class="fa fa-refresh fa-spin"></i> Generating..</span>
-        </button>
+        <div class="form-group">
+            <div class="pull-right">
+                <label class="text-normal"><sup><input type="checkbox" ng-model="settings.show_all"> Show non-English languages</sup></label>
+            </div>
+            <button type="button" class="btn btn-success" ng-disabled="loading || !settings.lang || !text" ng-click="createTTS()" ng-disabled="!text">
+                <span ng-show="!loading"><i class="fa fa-bullhorn"></i> Generate speech</span>
+                <span ng-show="loading"><i class="fa fa-refresh fa-spin"></i> Generating..</span>
+            </button>
 
-        <div audio-player sound="{{sound}}" skin="simple" hide-disabled="true"></div>
+            <div audio-player sound="{{sound}}" skin="simple" hide-disabled="true"></div>
+        </div>
     </div>
 </div>
